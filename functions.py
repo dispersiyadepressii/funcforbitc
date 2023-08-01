@@ -56,7 +56,7 @@ def Benefit(sum, price, arrdata):
                 hadpaid += float(arrline[0]) * float(arrline[2])
                 if (time.time() - float(arrline[1])) <= SEC_IN_YEAR:
                     taxable += float(arrline[0]) * float(arrline[2])
-                sum -= float(arrline(0))
+                sum -= float(arrline[0])
     if sum != 0.0:
         print("insufficient funds, missing", sum, "BTC")
         return 0

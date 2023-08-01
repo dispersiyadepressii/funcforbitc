@@ -34,5 +34,27 @@ def test_SortByDate():
     strings = []
     assert functions.SortByDate(strings) == []
 
+def test_SellWithoutTax():
+    #Test case: list is empty
+    arrdata = []
+    assert functions.SellWithoutTax(arrdata) == 0.0
+
+    #Test case: array with one element, where the time is greater than SEC_IN_YEAR
+    arrdata = ["10.0, 1598346000, somedata"]
+    assert functions.SellWithoutTax(arrdata) == 10.0
+
+    #Test case: input array with one element, where the time is less than SEC_IN_YEAR
+    arrdata = ["10.0, 1698346000, someotherdata"]
+    assert functions.SellWithoutTax(arrdata) == 0.0
+
+    #Test case:an input array with multiple elements, where some elements can be sold without tax
+    arrdata = ["5.0, 1798346000, data1", "20.0, 1638346000, data2", "15.0, 1645862400, data3"]
+    assert functions.SellWithoutTax(arrdata) == 35.0
+
+    #Test case: an input array with multiple elements, where all elements can be sold without tax
+    arrdata = ["10.0, 1598346000, data1", "20.0, 1638346000, data2", "15.0, 1645862400, data3"]
+    assert functions.SellWithoutTax(arrdata) == 45.0
+
+
 # Run the test
 pytest.main()
