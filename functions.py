@@ -47,18 +47,24 @@ def Benefit(sum, price, arrdata):
             break
         else:
             arrline = arrdata[i].split(',', 2)
-            if float(arrline[0]) > sum:
+            if float(arrline[0]) >= sum:
                 hadpaid += sum*float(arrline[2])
                 if (time.time() - float(arrline[1])) <= SEC_IN_YEAR:
                     taxable += sum*float(arrline[2])
+                sum = 0.0
             else:
                 hadpaid += float(arrline[0]) * float(arrline[2])
                 if (time.time() - float(arrline[1])) <= SEC_IN_YEAR:
                     taxable += float(arrline[0]) * float(arrline[2])
-    print("had payed:", hadpaid)
-    print("will get:", sum * price)    
-    print("benefit:", sum*price - hadpaid)
-    return (sum*price - hadpaid)
+                sum -= float(arrline(0))
+    if sum != 0.0:
+        print("insufficient funds, missing", sum, "BTC")
+        return 0
+    else:
+        print("had payed:", hadpaid)
+        print("will get:", sum * price)    
+        print("benefit:", sum*price - hadpaid)
+        return (sum*price - hadpaid)
 
 #def Benefit(sum, firsttax, price):
  #   arrayline = ReadLines('new_register.txt')
