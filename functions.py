@@ -1,35 +1,36 @@
 import time
-
-def ReadLines(nameoffile):
-    with open(nameoffile,'r') as f:
-        arrayline = f.readlines()
-        return arrayline
-
 #how much is not taxed
 def SellWithoutTax():
-    arrayline = ReadLines('new_register.txt')
-    sum = 0.0
-    i = 0
-    arr = arrayline[i].split(',', 2)
-    while (time.time() - float(arr[1])) >= 31536000.0:
-        sum += float(arr[0])
-        i += 1
+    f = open('new_register.txt','r')
+    try:
+        arrayline = f.readlines()
+        sum = 0.0
+        i = 0
         arr = arrayline[i].split(',', 2)
-    print("can sell without tax:", sum)
-    return sum, i
+        while (time.time() - float(arr[1])) >= 31536000.0:
+            sum += float(arr[0])
+            i += 1
+            arr = arrayline[i].split(',', 2)
+        print("can sell without tax:", sum)
+        return sum, i
+    finally:
+        f.close()
 
 #benefit from not taxed
 def Benefit(sum, firsttax,price):
-    arrayline = ReadLines('new_register.txt')
-    totalprice = 0.0
-    for i in range(0, firsttax):
-        arr = arrayline[i].split(',', 2)
-        totalprice += float(arr[0]) * float(arr[2])
-    print("had payed:", totalprice)
-    print("will get:", sum * price)    
-    print("benefit:", sum*price - totalprice)
-    return (sum*price - totalprice)
-
+    f = open('new_register.txt','r')
+    try:
+        totalprice = 0.0
+        arrayline = f.readlines()
+        for i in range(0, firsttax):
+            arr = arrayline[i].split(',', 2)
+            totalprice += float(arr[0]) * float(arr[2])
+        print("had payed:", totalprice)
+        print("will get:", sum * price)    
+        print("benefit:", sum*price - totalprice)
+        return (sum*price - totalprice)
+    finally:
+        f.close()
 
 #add new line
 def AddLine():
