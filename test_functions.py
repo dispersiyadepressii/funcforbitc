@@ -55,6 +55,29 @@ def test_SellWithoutTax():
     arrdata = ["10.0, 1598346000, data1", "20.0, 1638346000, data2", "15.0, 1645862400, data3"]
     assert functions.SellWithoutTax(arrdata) == 45.0
 
+def test_Benefit():
+    #Testb case: list is empty
+    arrdata = []
+    assert functions.Benefit(5, 10, arrdata) == 0
+
+    #Test case: one line of data, sum is smaller than arrline[0]
+    arrdata = ["10,1234567890,0.5"]
+    sum = 5
+    price = 10
+    assert functions.Benefit(sum, price, arrdata) == 47.5
+
+    #Test case: one line of data, sum is bigger than arrline[0]
+    arrdata = ["10,1234567890,0.5"]
+    assert functions.Benefit(15, 10, arrdata) == 0
+
+    #Test case: one line without tax and one with
+    arrdata = ["10,1234567890,0.5", "20,1656748973,0.7"]
+    assert functions.Benefit(15, 10, arrdata) == 141.5
+
+    #Test case: sum equall 0 in the end
+    arrdata = ["10,1234567890,0.5", "20,1456748973,0.7"]
+    assert functions.Benefit(30, 10, arrdata) == 281
+
 
 # Run the test
 pytest.main()
