@@ -49,7 +49,7 @@ def SortByDate(strings):
 def SellWithoutTax(arrdata, price):
     sum = 0.0
     for i in range(0, len(arrdata)):
-        if (time.time() - float(arrdata[i].data)) >= SEC_IN_YEAR or float(arrdata[i].price) <= price:
+        if (time.time() - float(arrdata[i].data)) >= SEC_IN_YEAR or float(arrdata[i].price) > price:
             sum += float(arrdata[i].quantity)
     return sum
 
@@ -64,13 +64,13 @@ def Benefit(sum, price, arrdata):
         else:
             if float(arrdata[i].quantity) >= cantsell:
                 hadpaid += cantsell*float(arrdata[i].price)
-                if (time.time() - float(arrdata[i].data)) <= SEC_IN_YEAR or float(arrdata[i].price) >= price:
+                if (time.time() - float(arrdata[i].data)) <= SEC_IN_YEAR and float(arrdata[i].price) <= price:
                     taxable += cantsell*price
                 cantsell = 0.0
                 break
             else:
                 hadpaid += arrdata[i].purchase_amount()
-                if (time.time() - float(arrdata[i].data)) <= SEC_IN_YEAR or float(arrdata[i].price) >= price:
+                if (time.time() - float(arrdata[i].data)) <= SEC_IN_YEAR and float(arrdata[i].price) <= price:
                     taxable += float(arrdata[i].quantity) * price
                 cantsell -= float(arrdata[i].quantity)
     if cantsell != 0.0:
